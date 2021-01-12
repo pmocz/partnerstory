@@ -1,0 +1,121 @@
+body {
+    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    background-color: white;
+	min-width: 450px;
+}
+
+h1 {
+    font-size: 1.75em;
+}
+
+h2 {
+    text-align: center;
+    font-size: 4em; 
+}
+
+td {
+    width: 50%;
+}
+
+input {
+	margin-bottom: 5px;
+}
+
+a:visited{ 
+	color: blue; 
+}
+
+.display {
+    width: 100%;
+    min-height: 240px;
+    padding-bottom: 20px;
+}
+
+.control {
+    width: 100%;
+    padding-bottom: 20px;
+}
+
+.control-button {
+    width: 100%;
+    min-height: 50px;
+}
+
+.button {
+  background-color: #999999; /* gray */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.display-box {
+    border: 2px solid black;
+}
+
+.title {
+    vertical-align: top;
+    text-align: center;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.no-display {
+    display: none;
+}
+
+.status {
+    height: 22px;
+    background-color: #cccccc;
+    display: inline;
+}
+
+.message {
+    height: 125px;
+    max-height: 125px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid black;
+    overflow: auto;
+}
+
+.storyline {
+    height: 22px;
+    max-height: 22px;
+    background-color: #cccccc;
+    margin-bottom: 10px;
+    overflow: auto;
+}
+
+
+.storylinehidden {
+    height: 22px;
+    max-height: 22px;
+    background-color: #000000;
+    margin-bottom: 10px;
+    overflow: auto;
+}
+
+.storylineactive {
+    height: 22px;
+    max-height: 22px;
+    background-color: #4CAF50;
+    margin-bottom: 10px;
+    overflow: auto;
+}
+
+.storylinenext {
+    height: 22px;
+    max-height: 22px;
+    background-color: #999999;
+    margin-bottom: 10px;
+    overflow: auto;
+}
