@@ -227,7 +227,9 @@
                     // Create own peer object with connection to shared PeerJS server
                     if(peer) peer.destroy();
 					peer = new Peer(null, {
-						debug: 2
+						secure: true, 
+						host: 'partnerstory.herokuapp.com', 
+						port: 443,
 					});
 
 
@@ -294,7 +296,9 @@
                     // Create own peer object with connection to shared PeerJS server
                     if (peer) peer.destroy();
 					peer = new Peer(null, {
-						debug: 2
+						secure: true, 
+						host: 'partnerstory.herokuapp.com', 
+						port: 443,
 					});
 					
 					status.innerHTML = "Please connect...";
