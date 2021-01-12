@@ -24,7 +24,8 @@
             </tr>
             <tr>
                 <td>
-                    <div class="hidden" id="host-id" style="font-weight: bold;" title="Send ID to friend">GAME ID:</div>
+                    <div class="hidden" id="host-id" style="font-weight: bold;" title="Send ID to friend">GAME ID: </div>
+                    <button class="hidden" id="host-id-copy">copy</button>
                 </td>
 				<td>
 					<div class="hidden" id="host-instructions"> Send the GAME ID to your friend </div>
@@ -159,6 +160,7 @@
                 var joingameButton = document.getElementById("joingame-button");
                 
                 var hostId = document.getElementById("host-id");
+                var hostIdCopyButton = document.getElementById("host-id-copy");
                 var hostInstructions = document.getElementById("host-instructions");
                 var joinText = document.getElementById("join-text");
                 var joinId = document.getElementById("join-id");
@@ -454,6 +456,17 @@
 					if (story == 2) partnerReadyNew = true;
 					updateGameState();
                 }
+                
+                /* Copy the Game ID*/
+				function copyID() {
+					var tempInput = document.createElement("input");
+					tempInput.value = peer.id;
+					document.body.appendChild(tempInput);
+					tempInput.select();
+					document.execCommand("copy");
+					document.body.removeChild(tempInput);
+					console.log('peer ID copied!')
+				}
 
 
 
@@ -848,6 +861,7 @@
 					hostgameButton.style.backgroundColor="#4CAF50"
 					joingameButton.style.backgroundColor="#999999"
                     hostId.className = "visible"
+                    hostIdCopyButton.className = "visible"
                     hostInstructions.className = "visible"
 					joinText.className = "hidden"
 					joinId.className = "hidden"
@@ -865,6 +879,7 @@
 					hostgameButton.style.background="#999999"
 					joingameButton.style.backgroundColor="#4CAF50"
                     hostId.className = "hidden"
+                    hostIdCopyButton.className = "hidden"
                     hostInstructions.className = "hidden"
 					joinText.className = "visible"
 					joinId.className = "visible"
@@ -964,6 +979,9 @@
                 
                 // Host a Game
                 hostgameButton.addEventListener('click', hostGame);
+                
+                // Host a Game
+                hostIdCopyButton.addEventListener('click', copyID);
                 
                 // Join a Game
                 joingameButton.addEventListener('click', joinGame);
