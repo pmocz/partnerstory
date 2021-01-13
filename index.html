@@ -10,6 +10,8 @@
 		<meta name="twitter:image" content="https://pmocz.github.io/partnerstory/partnerstory.png" />
         <title>Partner Story</title>
         <link rel="stylesheet" href="style.css">
+        <script type="text/javascript" src="html2canvas.min.js"></script>
+ </head>
     </head>
     <body>
 		<h1>Partner Story: Creative Writing Game <font size="-2"><a href="about.html">[about]</a></font></h1>
@@ -53,9 +55,10 @@
                 <td><div id="status" class="status; hidden"></div></td>
             </tr>
          </table>
-         <hr>
          
-         <table class="display">
+         <div class="container" id="container" >
+	     <hr>
+		 <table class="display">
 			<tr>
 				<div> <i>Write stories with a friend -- adding two lines at a time and passing back and forth. You can only see the last line your friend wrote. Reveal at the end to see your hilarious creations! </i></div>
 			</tr> 
@@ -102,13 +105,21 @@
             <tr>
                 <td class="storyline" id="sA9"> </td>
                 <td class="storyline" id="sB9"> </td>
-            </tr>   
+            </tr> 
+        </table>
+        <table class="display">
+            <tr>
+				<div class="myurlhidden" id="myurl"> [  https://pmocz.github.io/partnerstory/  ] </div>
+            </tr>
+		</table>
+		</div>
+		<table class="display">
             <tr>
                 <td>
-                    <div class="" id="awaiting-A">  [ awaiting story lines from friend ... ] </div>
+                    <div class="hidden" id="awaiting-A">  [ awaiting story lines from friend ... ] </div>
                 </td>
                 <td>
-                    <div class="" id="awaiting-B">  [ awaiting story lines from friend ... ] </div>
+                    <div class="hidden" id="awaiting-B">  [ awaiting story lines from friend ... ] </div>
                 </td>
             </tr>
             <tr>
@@ -138,6 +149,15 @@
                     <button class="hidden" id="reveal-button">Reveal Stories!</button>
                 </td>
 			</tr>
+			<tr>
+				<td>
+                    <button class="hidden" id="screenshot-button">Save Screenshot</button>
+                    <span class="hidden" id="screenshot-text">  ( Don't forget to share the best ones on <img class="icon" src="t.png" alt="Twitter"> and <img class="icon" src="fb.png" alt="Facebook">! ) </span>
+                </td>
+			</tr>
+		</table>
+		<br>
+		<table class="display">
 			<tr>
 				<td>
                     <button class="hidden" id="newgame-button">New Game</button>
@@ -175,6 +195,7 @@
                 var connectButton = document.getElementById("connect-button");
                 var joinInstructions = document.getElementById("join-instructions");
                 var statusText = document.getElementById("status-text");
+                var myurlText = document.getElementById("myurl");
                 
                 var titleA = document.getElementById("storyA-title");
                 var titleB = document.getElementById("storyB-title");
@@ -185,6 +206,8 @@
                 var waitATitle = document.getElementById("awaitingTitle-A");
                 var waitBTitle = document.getElementById("awaitingTitle-B");
                 var revealButton = document.getElementById("reveal-button");
+                var screenshotButton = document.getElementById("screenshot-button");
+                var screenshotText = document.getElementById("screenshot-text");
                 var newgameButton = document.getElementById("newgame-button");
                 var waitNewgame = document.getElementById("awaiting-newgame");
                 
@@ -229,6 +252,7 @@
                  */
                  function initializeHost() {
 					hosting = true;
+					hostId.innerHTML = "GAME ID: establishing connection to server ...";
                     // Close old connection
                     if (conn) {
                         conn.close();
@@ -491,6 +515,7 @@
 					titleA.innerHTML = 'Story A';
 					titleB.innerHTML = 'Story B';
 					
+					myurlText.className = 'myurlhidden';
 					titleBoxA.className = 'hidden';
 					titleBoxB.className = 'hidden';
 					titleButtonA.className = 'hidden';
@@ -498,6 +523,8 @@
 					waitATitle.className = 'hidden';
 					waitBTitle.className = 'hidden';
 					revealButton.className = 'hidden';
+					screenshotButton.className = 'hidden';
+					screenshotText.className = 'hidden';
 					newgameButton.className = 'hidden';
 					waitNewgame.className = 'hidden';	
 					
@@ -853,8 +880,16 @@
 					revealButton.className = 'hidden';
 					if (lineA==11 && lineB==11) revealButton.className = 'visible';
 					
+					screenshotButton.className = 'hidden';
+					screenshotText.className = 'hidden';
 					newgameButton.className = 'hidden';
-					if (lineA==12 && lineB==12) newgameButton.className = 'visible';
+					myurlText.className = 'myurlhidden';
+					if (lineA==12 && lineB==12) {
+						screenshotButton.className = 'visible';
+						screenshotText.className = 'visible';
+						newgameButton.className = 'visible';
+						myurlText.className = 'myurl';
+					}
 					
 					if(readyNew && partnerReadyNew) startnew();
 					
@@ -980,6 +1015,53 @@
                 });
                 
                 
+                function saveAs(uri, filename) {
+				
+					var link = document.createElement('a');
+				
+					if (typeof link.download === 'string') {
+				
+						link.href = uri;
+						link.download = filename;
+				
+						//Firefox requires the link to be in the body
+						document.body.appendChild(link);
+				
+						//simulate click
+						link.click();
+				
+						//remove the link when done
+						document.body.removeChild(link);
+				
+					} else {
+				
+						window.open(uri);
+				
+					}
+				}
+                
+				function screenshotAll(){
+					html2canvas(document.body).then(function(canvas) {
+			
+						document.body.appendChild(canvas);
+					});
+				}
+				
+				function screenshot(){
+					html2canvas(document.getElementById("container"),{backgroundColor: null}).then(function(canvas) {
+			
+						document.body.appendChild(canvas);
+					});
+				}
+				
+				function screenshotSave(){
+					html2canvas(document.getElementById("container"), {scrollY: -window.scrollY}).then(function(canvas) {
+
+						var now = new Date();
+						console.log(canvas);
+						saveAs(canvas.toDataURL(), "partnerstory_"  + now.toLocaleString() + ".png");
+					});
+				}
                 
                 
                 // Start peer connection on click
@@ -997,6 +1079,9 @@
                 // Reveal Stories
                 revealButton.addEventListener('click', reveal);
                 
+                // Save Screenshot
+                screenshotButton.addEventListener('click', screenshotSave);
+                
                 // New Game
                 newgameButton.addEventListener('click', readyfornew);
                 
@@ -1006,5 +1091,6 @@
 
             })();
         </script>
+
     </body>
 </html>
